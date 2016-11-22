@@ -1,12 +1,12 @@
 
 {% set compute = salt['grains.filter_by']({
     'Debian': {
-        'pkgs': ['neutron-plugin-openvswitch-agent', 'openvswitch-switch', 'openvswitch-datapath-dkms'],
-        'services': ['openvswitch-switch', 'neutron-plugin-openvswitch-agent']
+        'pkgs': ['neutron-openvswitch-agent', 'openvswitch-switch', 'openvswitch-datapath-dkms'],
+        'services': ['neutron-openvswitch-agent']
     },
     'RedHat': {
-        'pkgs': ['openstack-neutron-openvswitch', 'openvswitch', 'fuel-utils'],
-        'services': ['openvswitch', 'neutron-openvswitch-agent']
+        'pkgs': ['openstack-neutron-openvswitch', 'openvswitch'],
+        'services': ['neutron-openvswitch-agent']
     },
 }, merge=pillar.neutron.get('compute', {})) %}
 
