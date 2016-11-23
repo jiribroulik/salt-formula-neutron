@@ -12,19 +12,22 @@ is suggested only for those who really know what they're doing with Neutron).
 
 Sample pillars
 ==============
+<<<<<<< HEAD
+=======
+
+Neutron Server on the controller node
+>>>>>>> f747f362d25a391f5ff70c5d583a58e528951ccc
 
 <<<<<<< HEAD
 .. code-block:: yaml
 
     neutron:
+<<<<<<< HEAD
       gateway:
         enabled: true
 =======
 Neutron Server on the controller node
-
-.. code-block:: yaml
-
-    neutron:
+=======
       server:
         enabled: true
         version: mitaka
@@ -72,11 +75,16 @@ one to be utilised
 
 Neutron Server only
 -------------------
+>>>>>>> f747f362d25a391f5ff70c5d583a58e528951ccc
 
 .. code-block:: yaml
 
     neutron:
       server:
+<<<<<<< HEAD
+        enabled: true
+=======
+>>>>>>> f747f362d25a391f5ff70c5d583a58e528951ccc
         version: mitaka
         bind:
           address: 172.20.0.1
@@ -102,6 +110,25 @@ Neutron Server only
           user: openstack
           password: pwd
           virtual_host: '/openstack'
+<<<<<<< HEAD
+        metadata:
+          host: 127.0.0.1
+          port: 8775
+          password: pass
+
+Neutron VXLAN tenant networks with Network Nodes (with DVR for East-West
+ and Network node for North-South)
+=========================================================================
+===================================
+
+This use case describes a model utilising VxLAN overlay with DVR. The DVR
+ routers will only be utilized for traffic that is router within the cloud
+  infrastructure and that remains encapsulated. External traffic will be 
+  routed to via the network nodes. 
+
+The intention is that each tenant will require at least two (2) vrouters 
+one to be utilised 
+=======
         global_physnet_mtu: 9000
         l3_ha: True
         dvr: True #disabled for non DVR use case
@@ -112,7 +139,6 @@ Neutron Server only
           mechanism:
             ovs:
               driver: openvswitch
->>>>>>> 60aa25ad6d540ac9833fe7a4f4cad5bf3e025dde
 
 Network Node only
 -----------------
@@ -159,6 +185,127 @@ Compute Node
           password: pwd
           virtual_host: '/openstack'
         local_ip: 192.168.20.20 # br-mesh ip address
+        dvr: True # disabled for non DVR use case
+        agent_mode: dvr
+        external_access: false # Compute node with DVR for east-west only, Network Node has True as default
+        metadata:
+          host: 127.0.0.1
+          password: pass       
+        backend:
+          engine: ml2
+          mechanism:
+            ovs:
+              driver: openvswitch
+
+Neutron VXLAN tenant networks with Network Nodes (non DVR)
+==========================================================
+
+This section describes a network solution that utilises VxLAN overlay
+ networks without DVR with all routers being managed on the network nodes.
+>>>>>>> f747f362d25a391f5ff70c5d583a58e528951ccc
+
+Neutron Server only
+-------------------
+
+.. code-block:: yaml
+
+    neutron:
+      server:
+        version: mitaka
+        bind:
+          address: 172.20.0.1
+          port: 9696
+        database:
+          engine: mysql
+          host: 127.0.0.1
+          port: 3306
+          name: neutron
+          user: neutron
+          password: pwd
+        identity:
+          engine: keystone
+          host: 127.0.0.1
+          port: 35357
+          user: neutron
+          password: pwd
+          tenant: service
+        message_queue:
+          engine: rabbitmq
+          host: 127.0.0.1
+          port: 5672
+          user: openstack
+          password: pwd
+          virtual_host: '/openstack'
+        global_physnet_mtu: 9000
+        l3_ha: True
+<<<<<<< HEAD
+        dvr: True #disabled for non DVR use case
+=======
+        dvr: False
+>>>>>>> f747f362d25a391f5ff70c5d583a58e528951ccc
+        backend:
+          engine: ml2
+          tenant_network_types= "flat,vxlan"
+          external_mtu: 9000
+          mechanism:
+            ovs:
+              driver: openvswitch
+<<<<<<< HEAD
+>>>>>>> 60aa25ad6d540ac9833fe7a4f4cad5bf3e025dde
+=======
+>>>>>>> f747f362d25a391f5ff70c5d583a58e528951ccc
+
+Network Node only
+-----------------
+
+.. code-block:: yaml
+
+    neutron:
+      gateway:
+        enabled: True
+        version: mitaka
+        message_queue:
+          engine: rabbitmq
+          host: 127.0.0.1
+          port: 5672
+          user: openstack
+          password: pwd
+          virtual_host: '/openstack'
+        local_ip: 192.168.20.20 # br-mesh ip address
+<<<<<<< HEAD
+        dvr: True # disabled for non DVR use case
+        agent_mode: dvr_snat
+=======
+        dvr: False
+        agent_mode: legacy
+>>>>>>> f747f362d25a391f5ff70c5d583a58e528951ccc
+        metadata:
+          host: 127.0.0.1
+          password: pass
+        backend:
+          engine: ml2
+          mechanism:
+            ovs:
+              driver: openvswitch  
+
+Compute Node
+-------------
+
+.. code-block:: yaml
+
+    neutron:
+      compute:
+        enabled: True
+        version: mitaka
+        message_queue:
+          engine: rabbitmq
+          host: 127.0.0.1
+          port: 5672
+          user: openstack
+          password: pwd
+          virtual_host: '/openstack'
+        local_ip: 192.168.20.20 # br-mesh ip address
+<<<<<<< HEAD
         dvr: True # disabled for non DVR use case
         agent_mode: dvr
         external_access: false # Compute node with DVR for east-west only, Network Node has True as default
@@ -265,6 +412,8 @@ Compute Node
           password: pwd
           virtual_host: '/openstack'
         local_ip: 192.168.20.20 # br-mesh ip address
+=======
+>>>>>>> f747f362d25a391f5ff70c5d583a58e528951ccc
         dvr: False      
         backend:
           engine: ml2

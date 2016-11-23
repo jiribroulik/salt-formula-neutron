@@ -36,7 +36,11 @@ core_plugin = neutron_plugin_contrail.plugins.opencontrail.contrail_plugin.Neutr
 
 # TEMPORARY - until neutron v2 contrail package would be supported
 #service_plugins = neutron_plugin_contrail.plugins.opencontrail.loadbalancer.v2.plugin.LoadBalancerPluginV2
+<<<<<<< HEAD
 {% elif server.backend.engine == "ml2" % }
+=======
+{% elif server.backend.engine == "ml2" %}
+>>>>>>> f747f362d25a391f5ff70c5d583a58e528951ccc
 
 core_plugin = neutron.plugins.ml2.plugin.Ml2Plugin
 
@@ -722,11 +726,19 @@ report_interval = 10
 # Deprecated group/name - [DEFAULT]/sql_connection
 # Deprecated group/name - [DATABASE]/sql_connection
 # Deprecated group/name - [sql]/connection
+<<<<<<< HEAD
 {% if server.backend.engine == "ml2" % }
 connection = {{ server.database.engine }}+pymysql://{{ server.database.user }}:{{ server.database.password }}@{{ server.database.host }}/{{ server.database.name }}
 {% else % }
 connection = sqlite:////var/lib/neutron/neutron.sqlite
 {% endif % }
+=======
+{% if server.backend.engine == "ml2" %}
+connection = {{ server.database.engine }}+pymysql://{{ server.database.user }}:{{ server.database.password }}@{{ server.database.host }}/{{ server.database.name }}
+{% else %}
+connection = sqlite:////var/lib/neutron/neutron.sqlite
+{% endif %}
+>>>>>>> f747f362d25a391f5ff70c5d583a58e528951ccc
 # The SQLAlchemy connection string to use to connect to the slave database.
 # (string value)
 #slave_connection = <None>
@@ -808,16 +820,18 @@ max_overflow = 20
 
 
 [keystone_authtoken]
+{% if server.backend.engine == "contrail" %}
+admin_token = {{ server.backend.token }}
+admin_user={{ server.backend.user }}
+admin_password={{ server.backend.password }}
+admin_tenant_name={{ server.backend.tenant }}
+{%- endif %}
 auth_region={{ server.identity.region }}
 auth_protocol=http
 revocation_cache_time = 10
 auth_type = password
 auth_host = {{ server.identity.host }}
 auth_port = 35357
-admin_token = {{ server.backend.token }}
-admin_user={{ server.backend.user }}
-admin_password={{ server.backend.password }}
-admin_tenant_name={{ server.backend.tenant }}
 user_domain_id = {{ server.identity.get('domain', 'default') }}
 project_domain_id = {{ server.identity.get('domain', 'default') }}
 project_name = {{ server.identity.tenant }}
